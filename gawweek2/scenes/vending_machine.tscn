@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://dslrfkv74oywg"]
+
+[ext_resource type="PackedScene" uid="uid://bm1bfh2gx131x" path="res://Vending Machine.glb" id="1_fe67n"]
+
+[sub_resource type="Animation" id="Animation_elvaq"]
+resource_name = "interact"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.0349066, 0, 0), Vector3(0.0349066, 0, 0.0349066), Vector3(0, 0, 0.0349066), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.6155, 0), Vector3(0, 1.616, 0.05), Vector3(-0.05, 1.616, 0.05), Vector3(-0.05, 1.616, 0), Vector3(0, 1.616, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f7co6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0553095, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.6155, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pr2qu"]
+_data = {
+"RESET": SubResource("Animation_f7co6"),
+"interact": SubResource("Animation_elvaq")
+}
+
+[node name="Vending Machine" instance=ExtResource("1_fe67n")]
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(2, 0, 0, 0, 1.99694, -0.110563, 0, 0.110563, 1.99694, 0, 1.6155, 0)
+
+[node name="GRID" parent="." index="1"]
+transform = Transform3D(1.92996, -0.484768, -0.200627, 0.483844, 1.9403, -0.033868, 0.202847, -0.0158541, 1.98962, -5.32372, -2.45185, 2.72626)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0375569, 1.6537, -0.0304759)
+visible = false
+use_collision = true
+size = Vector3(1.57562, 3.25842, 2.10455)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_pr2qu")
+}

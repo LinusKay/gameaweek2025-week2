@@ -1,0 +1,129 @@
+[gd_scene load_steps=15 format=3 uid="uid://81m0tx5iblwo"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_7g50q"]
+[ext_resource type="Shader" path="res://shader/dither.gdshader" id="1_45v34"]
+[ext_resource type="Texture2D" uid="uid://d0axe0bf61yod" path="res://shader/assets/palette_arq4.png" id="2_25qlh"]
+[ext_resource type="Texture2D" uid="uid://d2q0t4cjcym6o" path="res://shader/assets/bayer16tile2.png" id="3_uwnyy"]
+[ext_resource type="PackedScene" uid="uid://blscjckkvc8xo" path="res://scenes/player.tscn" id="4_bv7ku"]
+[ext_resource type="PackedScene" uid="uid://dq8cdfapse4fq" path="res://scenes/ui.tscn" id="6_slmie"]
+[ext_resource type="Script" path="res://scripts/vending_machine.gd" id="8_4clry"]
+[ext_resource type="PackedScene" uid="uid://dslrfkv74oywg" path="res://scenes/vending_machine.tscn" id="8_scyo8"]
+[ext_resource type="AudioStream" uid="uid://pnt42empjitx" path="res://audio/amb_fridge_loop_1.ogg" id="9_6f8y1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uxfh4"]
+shader = ExtResource("1_45v34")
+shader_parameter/u_bit_depth = 64
+shader_parameter/u_contrast = 1.0
+shader_parameter/u_offset = 0.0
+shader_parameter/u_dither_size = 1
+shader_parameter/u_dither_tex = ExtResource("3_uwnyy")
+shader_parameter/u_color_tex = ExtResource("2_25qlh")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c8ncw"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_2iw6p"]
+sky_material = SubResource("ProceduralSkyMaterial_c8ncw")
+
+[sub_resource type="Environment" id="Environment_aehbf"]
+background_mode = 1
+background_color = Color(0.0923971, 0.0923971, 0.0923971, 1)
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_2iw6p")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_depth_curve = 0.18
+fog_depth_begin = 0.1
+fog_depth_end = 855.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyxtq"]
+
+[node name="world" type="Node3D" node_paths=PackedStringArray("player", "ui", "vending_machine")]
+script = ExtResource("1_7g50q")
+player = NodePath("SubViewportContainer/SubViewport/Player")
+ui = NodePath("SubViewportContainer/SubViewport/UI")
+vending_machine = NodePath("SubViewportContainer/SubViewport/Vending Machine")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_uxfh4")
+offset_right = 1152.0
+offset_bottom = 648.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+audio_listener_enable_3d = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_aehbf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_bv7ku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4188, 0, 0)
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Player"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0251465, 8.1801, -0.00441217)
+spot_range = 9.07414
+spot_attenuation = -0.92
+spot_angle = 4.47
+
+[node name="UI" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("6_slmie")]
+process_mode = 3
+visible = false
+player = NodePath("../Player")
+
+[node name="Wall" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 4, 0)
+visible = false
+use_collision = true
+size = Vector3(1, 9, 32)
+
+[node name="Wall2" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4.5, 0)
+visible = false
+use_collision = true
+size = Vector3(1, 10, 32)
+
+[node name="Wall3" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.00572586, 4, -16.0495)
+visible = false
+use_collision = true
+size = Vector3(1, 9, 32)
+
+[node name="Wall4" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.00572586, 4, 15.9505)
+visible = false
+use_collision = true
+size = Vector3(1, 9, 32)
+
+[node name="Floor" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+use_collision = true
+size = Vector3(32, 0.001, 32)
+material = SubResource("StandardMaterial3D_tyxtq")
+
+[node name="Vending Machine" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_scyo8")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 14.2472, 0.000500202, -0.151594)
+script = ExtResource("8_4clry")
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
+transform = Transform3D(0.99099, -5.85446e-09, 0.133934, -0.133934, -4.33176e-08, 0.99099, 0, -1, -4.37114e-08, 1.7535, 8.1801, -0.00441217)
+spot_range = 9.07414
+spot_attenuation = -0.4
+spot_angle = 21.4679
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86402, 0)
+stream = ExtResource("9_6f8y1")
+volume_db = 10.0
+unit_size = 20.0
+max_db = 6.0
+autoplay = true
+max_distance = 10.0
