@@ -4,7 +4,7 @@
 
 ## Game: ???
 
-!["Showcase image"](/showcase/Screenshot 2025-01-27 232610.png)
+!["Showcase image"](/showcase/Screenshot_2025-01-27_232610.png)
 
 > ...
 
