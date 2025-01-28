@@ -11,7 +11,6 @@ signal forget
 @onready var _sfx_chime3 = preload("res://audio/chime3.ogg")
 
 
-
 # memory management
 @onready var memories = {
 	"memory_1": {name = "memory 1", description = "memory 1: placeholder description", shape = CSGBox3D},
@@ -29,6 +28,8 @@ signal forget
 
 @onready var memory_limit = 4
 
+var readied = false
+
 var memory_selected = 0:
 	set(memory_selected_new):
 		memory_selected = memory_selected_new
@@ -44,7 +45,7 @@ var rotating = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_memory_box_setup()
-
+	readied = true
 
 func _process(delta: float) -> void:
 	print(memory_selected)
@@ -121,7 +122,8 @@ func _handle_memory_select() -> void:
 		else: 
 			child.selected = false
 	emit_signal("selection_changed")
-	_play_sfx(_sfx_chime2)
+	if readied: 
+		_play_sfx(_sfx_chime2)
 
 
 func _rotate_ring(_polarity: int) -> void:
