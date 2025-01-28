@@ -103,3 +103,7 @@ size = Vector3(1.57562, 3.25842, 2.10455)
 libraries = {
 "": SubResource("AnimationLibrary_pr2qu")
 }
+
+[node name="VendingAudio" type="AudioStreamPlayer3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 0.998471, -0.0552813, 0, 0.0552813, 0.998471, 0, 1.6155, 0)
+volume_db = -20.0

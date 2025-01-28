@@ -84,10 +84,11 @@ spot_range = 9.07414
 spot_attenuation = -0.92
 spot_angle = 4.47
 
-[node name="MemoryRing" parent="SubViewportContainer/SubViewport/Player" node_paths=PackedStringArray("ui") instance=ExtResource("6_sni01")]
+[node name="MemoryRing" parent="SubViewportContainer/SubViewport/Player" node_paths=PackedStringArray("ui", "player") instance=ExtResource("6_sni01")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7631, 0.675, 0)
 visible = false
 ui = NodePath("../../UI")
+player = NodePath("..")
 
 [node name="UI" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("memory_ring", "player") instance=ExtResource("6_slmie")]
 process_mode = 3
@@ -137,14 +138,14 @@ spot_range = 9.07414
 spot_attenuation = -0.4
 spot_angle = 21.4679
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86402, 0)
 stream = ExtResource("9_6f8y1")
-volume_db = 10.0
-unit_size = 20.0
+volume_db = -30.0
+unit_size = 25.0
 max_db = 6.0
 autoplay = true
-max_distance = 10.0
+max_distance = 20.0
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77536, 1.7475, -1.04308e-07)

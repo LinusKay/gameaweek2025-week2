@@ -1,8 +1,6 @@
 extends CharacterBody3D
 
-signal jump
 signal interact
-signal forget
 
 var speed
 const WALK_SPEED = 4.0
@@ -21,6 +19,8 @@ const FOV_CHANGE = 1.5
 var fov_lock = false
 
 var holding = false
+
+@onready var _sfx_drink = preload("res://audio/sip.ogg")
 
 # Camera variables
 const CAMERA_LIMIT_DOWN = -60
@@ -69,19 +69,10 @@ func _physics_process(delta: float) -> void:
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("interact"):
-		if(position.distance_to(vending_machine.position) < vending_machine.vend_distance):
-			if(memory_ring.is_visible_in_tree()): 
-				if(memory_ring.memory_bank.size() > 0):
-					emit_signal("forget")
-					memory_ring.delete_memory(memory_ring.memory_selected)
-				ui.hide()
-				memory_ring.hide()
-				can_move = true
-			else: 
+		if !holding:
+			if(position.distance_to(vending_machine.position) < vending_machine.vend_distance):
 				emit_signal("interact")
-				ui.show()
-				memory_ring.show()
-				can_move = false
+				
 		
 	if Input.is_action_just_pressed("toggle_mouse_capture"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -91,9 +82,6 @@ func _physics_process(delta: float) -> void:
 			
 	if Input.is_action_just_pressed("click"):
 		_drink()
-
-	if Input.is_action_just_pressed("menu_memory"):
-		pass
 		
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
@@ -129,9 +117,21 @@ func _headbob(time) -> Vector3:
 	return pos
 	
 func _on_vend() -> void:
+	%CogaTimer.start()
+
+func _on_coga_timer_timeout() -> void:
 	%CogaBottle.show()
 	holding = true
 
 func _drink() -> void:
+	%CogaDrinkTimer.start()
+	%PlayerAudio.stream = _sfx_drink
+	%PlayerAudio.play()
+		
+
+func _on_coga_drink_timer_timeout() -> void:
+	_bottle_dispose()
+
+func _bottle_dispose() -> void:
 	%CogaBottle.hide()
 	holding = false

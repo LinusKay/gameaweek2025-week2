@@ -27,3 +27,18 @@ unique_name_in_owner = true
 transform = Transform3D(0.935838, 0.35243, 2.8046e-09, -0.35243, 0.935838, 1.54052e-08, 2.8046e-09, -1.54052e-08, 1, 0.627502, -0.597621, -0.851164)
 visible = false
 texture = ExtResource("2_03b15")
+
+[node name="CogaTimer" type="Timer" parent="Head/Camera3D/CogaBottle"]
+unique_name_in_owner = true
+wait_time = 0.6
+one_shot = true
+
+[node name="CogaDrinkTimer" type="Timer" parent="Head/Camera3D/CogaBottle"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="Head/Camera3D/CogaBottle/CogaTimer" to="." method="_on_coga_timer_timeout"]
+[connection signal="timeout" from="Head/Camera3D/CogaBottle/CogaDrinkTimer" to="." method="_on_coga_drink_timer_timeout"]

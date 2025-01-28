@@ -1,8 +1,16 @@
 extends Node3D
 
 signal selection_changed
+signal forget
 
 @export var ui: UI
+@export var player: CharacterBody3D
+
+@onready var _sfx_chime1 = preload("res://audio/chime1.ogg")
+@onready var _sfx_chime2 = preload("res://audio/chime2.ogg")
+@onready var _sfx_chime3 = preload("res://audio/chime3.ogg")
+
+
 
 # memory management
 @onready var memories = {
@@ -27,6 +35,7 @@ var memory_selected = 0:
 		_handle_memory_select()
 
 var memorybox_scene = preload("res://scenes/memory_box.tscn")
+var audio_autokill_scene = preload("res://scenes/audio_stream_player_autokill.tscn")
 
 var rotation_goal = 0.0  
 var rotation_speed = 300.0  
@@ -112,6 +121,7 @@ func _handle_memory_select() -> void:
 		else: 
 			child.selected = false
 	emit_signal("selection_changed")
+	_play_sfx(_sfx_chime2)
 
 
 func _rotate_ring(_polarity: int) -> void:
@@ -154,3 +164,34 @@ func get_memory_name() -> String:
 func get_memory_description() -> String:
 	return memories[memory_bank[memory_selected]].description
 	
+
+func _on_memory_request() -> void:
+	if(is_visible_in_tree()): 
+		if(memory_bank.size() > 0):
+			emit_signal("forget")
+			delete_memory(memory_selected)
+		if %CloseTimer.is_stopped():
+			ui.hide()
+			hide()
+			player.can_move = true
+	else: 
+		if(memory_bank.size() > 0): 
+			_play_sfx(_sfx_chime1)
+		else: 
+			_play_sfx(_sfx_chime3)
+			%CloseTimer.start()
+		ui.show()
+		show()
+		player.can_move = false
+	
+func _play_sfx(_sfx) -> void:
+	var audio_node = audio_autokill_scene.instantiate()
+	audio_node.stream = _sfx
+	add_child(audio_node)
+
+
+func _on_close_timer_timeout() -> void:
+	if is_visible_in_tree():
+		hide()
+		ui.hide()
+		player.can_move = true

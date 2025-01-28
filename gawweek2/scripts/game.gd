@@ -7,14 +7,14 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if !player.jump.is_connected(ui._on_jump):
-		player.jump.connect(ui._on_jump)
 	if !player.interact.is_connected(vending_machine._on_interact):
 		player.interact.connect(vending_machine._on_interact)
-	if !player.forget.is_connected(vending_machine._on_forget):
-		player.forget.connect(vending_machine._on_forget)
+	if !memory_ring.forget.is_connected(vending_machine._on_forget):
+		memory_ring.forget.connect(vending_machine._on_forget)
 	if !vending_machine.vend.is_connected(player._on_vend):
 		vending_machine.vend.connect(player._on_vend)
+	if !vending_machine.request_memory.is_connected(memory_ring._on_memory_request):
+		vending_machine.request_memory.connect(memory_ring._on_memory_request)
 	if !memory_ring.selection_changed.is_connected(ui._on_selection_change):
 		memory_ring.selection_changed.connect(ui._on_selection_change)
 
