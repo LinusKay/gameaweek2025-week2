@@ -26,6 +26,7 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
@@ -38,6 +39,7 @@ visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -48,7 +50,7 @@ theme_override_constants/margin_top = 50
 [node name="MemoriesLabel" type="Label" parent="MarginContainer/VBoxContainer2/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("2_0568b")
-text = "memories."
+text = "memories"
 
 [node name="MemoryContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/MarginContainer"]
 unique_name_in_owner = true
@@ -66,4 +68,19 @@ unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_0568b")
 text = "DESCRIPTION"
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer4"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 175
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer4/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("2_0568b")
+theme_override_font_sizes/font_size = 35
+text = "you must forgo a memory"
 horizontal_alignment = 1

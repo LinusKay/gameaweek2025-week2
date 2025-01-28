@@ -10,11 +10,6 @@ class_name UI
 
 var label_theme = load("res://textures/ui.tres")
 
-var memory_selected = 0:
-	set(new_memory_selected):
-		memory_selected = new_memory_selected
-		_update_memory_selection()
-
 var hp = 100:
 	set(new_hp):
 		hp = new_hp
@@ -52,14 +47,4 @@ func _on_selection_change():
 	print("UI: selection change")
 	%DescriptionLabel.text = memory_ring.get_memory_name()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("menu_memory"):
-		if(is_visible_in_tree()): 
-			hide()
-			memory_ring.hide()
-			player.can_move = true
-		else: 
-			show()
-			memory_ring.show()
-			player.can_move = false
 		

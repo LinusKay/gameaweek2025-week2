@@ -136,7 +136,7 @@ func _replace_memory(_index, _memory_id) -> void:
 	memory_bank[_index] = _memory_id
 	_memory_box_setup()
 
-func _delete_memory(_index) -> void:
+func delete_memory(_index) -> void:
 	memory_bank.remove_at(_index)
 	_memory_box_setup()
 

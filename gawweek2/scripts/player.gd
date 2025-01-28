@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 signal jump
 signal interact
+signal forget
 
 var speed
 const WALK_SPEED = 4.0
@@ -19,11 +20,16 @@ const BASE_FOV = 75.0
 const FOV_CHANGE = 1.5
 var fov_lock = false
 
+var holding = false
+
 # Camera variables
 const CAMERA_LIMIT_DOWN = -60
 const CAMERA_LIMIT_UP = 80
 
 @export var can_move = true
+@export var memory_ring: Node3D
+@export var ui: UI
+@export var vending_machine: Node3D
 
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
@@ -63,13 +69,30 @@ func _physics_process(delta: float) -> void:
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("interact"):
-		emit_signal("interact")
+		if(position.distance_to(vending_machine.position) < vending_machine.vend_distance):
+			if(memory_ring.is_visible_in_tree()): 
+				emit_signal("forget")
+				memory_ring.delete_memory(memory_ring.memory_selected)
+				ui.hide()
+				memory_ring.hide()
+				can_move = true
+			else: 
+				emit_signal("interact")
+				ui.show()
+				memory_ring.show()
+				can_move = false
 		
 	if Input.is_action_just_pressed("toggle_mouse_capture"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			
+	if Input.is_action_just_pressed("click"):
+		_drink()
+
+	if Input.is_action_just_pressed("menu_memory"):
+		pass
 		
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
@@ -104,3 +127,10 @@ func _headbob(time) -> Vector3:
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
 	
+func _on_vend() -> void:
+	%CogaBottle.show()
+	holding = true
+
+func _drink() -> void:
+	%CogaBottle.hide()
+	holding = false

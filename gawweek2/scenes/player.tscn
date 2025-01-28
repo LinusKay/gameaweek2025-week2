@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://blscjckkvc8xo"]
+[gd_scene load_steps=5 format=3 uid="uid://blscjckkvc8xo"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_s10rd"]
+[ext_resource type="Texture2D" uid="uid://bhm2b4nk22sog" path="res://sprites/coga.png" id="2_03b15"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rs1m5"]
 
@@ -20,3 +21,9 @@ mesh = SubResource("CapsuleMesh_cqcnt")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.46433, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="CogaBottle" type="Sprite3D" parent="Head/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(0.935838, 0.35243, 2.8046e-09, -0.35243, 0.935838, 1.54052e-08, 2.8046e-09, -1.54052e-08, 1, 0.627502, -0.597621, -0.851164)
+visible = false
+texture = ExtResource("2_03b15")

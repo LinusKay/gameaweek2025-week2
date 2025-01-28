@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://81m0tx5iblwo"]
+[gd_scene load_steps=18 format=3 uid="uid://81m0tx5iblwo"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7g50q"]
 [ext_resource type="Shader" path="res://shader/dither.gdshader" id="1_45v34"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dq8cdfapse4fq" path="res://scenes/ui.tscn" id="6_slmie"]
 [ext_resource type="PackedScene" uid="uid://ctfvwblon2ail" path="res://scenes/memory_ring.tscn" id="6_sni01"]
 [ext_resource type="Script" path="res://scripts/vending_machine.gd" id="8_4clry"]
+[ext_resource type="Texture2D" uid="uid://bhm2b4nk22sog" path="res://sprites/coga.png" id="8_7k2ir"]
 [ext_resource type="PackedScene" uid="uid://dslrfkv74oywg" path="res://scenes/vending_machine.tscn" id="8_scyo8"]
 [ext_resource type="AudioStream" uid="uid://pnt42empjitx" path="res://audio/amb_fridge_loop_1.ogg" id="9_6f8y1"]
 
@@ -39,6 +40,9 @@ fog_depth_curve = 0.18
 fog_depth_begin = 0.1
 fog_depth_end = 855.7
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6c1r"]
+albedo_texture = ExtResource("8_7k2ir")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyxtq"]
 
 [node name="world" type="Node3D" node_paths=PackedStringArray("player", "ui", "vending_machine", "memory_ring")]
@@ -68,8 +72,12 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 visible = false
 shadow_enabled = true
 
-[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_bv7ku")]
+[node name="Player" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("memory_ring", "ui", "vending_machine") instance=ExtResource("4_bv7ku")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4188, 0, 0)
+can_move = true
+memory_ring = NodePath("MemoryRing")
+ui = NodePath("../UI")
+vending_machine = NodePath("../Vending Machine")
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Player"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0251465, 8.1801, -0.00441217)
@@ -113,13 +121,16 @@ use_collision = true
 size = Vector3(1, 9, 32)
 
 [node name="Floor" type="CSGBox3D" parent="SubViewportContainer/SubViewport"]
+material_override = SubResource("StandardMaterial3D_c6c1r")
 use_collision = true
 size = Vector3(32, 0.001, 32)
 material = SubResource("StandardMaterial3D_tyxtq")
 
-[node name="Vending Machine" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_scyo8")]
+[node name="Vending Machine" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("player", "memory_ring") instance=ExtResource("8_scyo8")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 14.2472, 0.000500202, -0.151594)
 script = ExtResource("8_4clry")
+player = NodePath("../Player")
+memory_ring = NodePath("../Player/MemoryRing")
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
 transform = Transform3D(0.99099, -5.85446e-09, 0.133934, -0.133934, -4.33176e-08, 0.99099, 0, -1, -4.37114e-08, 1.7535, 8.1801, -0.00441217)
@@ -135,3 +146,9 @@ unit_size = 20.0
 max_db = 6.0
 autoplay = true
 max_distance = 10.0
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="SubViewportContainer/SubViewport/Vending Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77536, 1.7475, -1.04308e-07)
+visible = false
+use_collision = true
+size = Vector3(4.55072, 4.495, 3)
