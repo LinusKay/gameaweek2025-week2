@@ -38,6 +38,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	print(memory_selected)
 	if rotating:
 		var current_rotation = %MemoryBoxParent.rotation_degrees.y
 		var difference = rotation_goal - current_rotation
@@ -59,6 +60,7 @@ func _process(delta: float) -> void:
 
 
 func _memory_box_setup() -> void:
+	memory_selected = 0
 	# Reset rotation to zero
 	rotation_goal = 0.0
 	%MemoryBoxParent.rotation_degrees.y = 0.0
@@ -137,13 +139,17 @@ func _replace_memory(_index, _memory_id) -> void:
 	_memory_box_setup()
 
 func delete_memory(_index) -> void:
+	print(_index)
 	memory_bank.remove_at(_index)
 	_memory_box_setup()
 
 
 # Getter functions
 func get_memory_name() -> String:
-	return memories[memory_bank[memory_selected]].name
+	if(memory_bank.size() > 0):
+		return memories[memory_bank[memory_selected]].name
+	else: 
+		return "no memory"
 
 func get_memory_description() -> String:
 	return memories[memory_bank[memory_selected]].description

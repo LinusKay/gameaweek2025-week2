@@ -74,7 +74,6 @@ shadow_enabled = true
 
 [node name="Player" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("memory_ring", "ui", "vending_machine") instance=ExtResource("4_bv7ku")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4188, 0, 0)
-can_move = true
 memory_ring = NodePath("MemoryRing")
 ui = NodePath("../UI")
 vending_machine = NodePath("../Vending Machine")

@@ -25,4 +25,5 @@ func _on_interact():
 		pass
 
 func _on_forget() -> void:
+	$AnimationPlayer2.play("interact")
 	emit_signal("vend")

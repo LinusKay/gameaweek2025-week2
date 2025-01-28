@@ -71,8 +71,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		if(position.distance_to(vending_machine.position) < vending_machine.vend_distance):
 			if(memory_ring.is_visible_in_tree()): 
-				emit_signal("forget")
-				memory_ring.delete_memory(memory_ring.memory_selected)
+				if(memory_ring.memory_bank.size() > 0):
+					emit_signal("forget")
+					memory_ring.delete_memory(memory_ring.memory_selected)
 				ui.hide()
 				memory_ring.hide()
 				can_move = true
