@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq8cdfapse4fq"]
 
-[ext_resource type="Script" path="res://ui.gd" id="1_sa2nj"]
-[ext_resource type="Theme" uid="uid://bqcufoip767ib" path="res://ui.tres" id="2_0568b"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="1_sa2nj"]
+[ext_resource type="Theme" uid="uid://bqcufoip767ib" path="res://textures/ui.tres" id="2_0568b"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -34,18 +34,23 @@ layout_mode = 2
 
 [node name="HP" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 
-[node name="MemoriesLabel" type="Label" parent="MarginContainer/VBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_top = 50
+
+[node name="MemoriesLabel" type="Label" parent="MarginContainer/VBoxContainer2/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("2_0568b")
-text = "Memories"
+text = "memories."
 
-[node name="MemoryContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
+[node name="MemoryContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8

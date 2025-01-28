@@ -28,22 +28,6 @@ const CAMERA_LIMIT_UP = 80
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 
-# memory management
-@onready var memories = {
-	"mother_eyes": {name = "mother's eyes", description = "mother_eyes: placeholder description"},
-	"home_scent": {name = "home's scent", description = "home_scent: placeholder description"},
-	"lover_touch": {name = "lover's touch", description = "lover_touch: placeholder description"},
-	"sun_light": {name = "sun's light", description = "sun_light: placeholder description"},
-	"wind_breeze": {name = "wind's breeze", description = "wind_breeze: placeholder description"},
-}
-
-@onready var memory_bank = [
-	"mother_eyes",
-	"lover_touch",
-	"wind_breeze"
-]
-
-@onready var memory_limit = 4
 
 
 func _ready() -> void:
@@ -120,16 +104,3 @@ func _headbob(time) -> Vector3:
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
 	
-	
-# Memory management
-func _replace_memory(_index, _memory_id) -> void:
-	var old_memory = memory_bank[_index]
-	memory_bank[_index] = _memory_id
-	var new_memory = memory_bank[_index]
-	print("replaced " + old_memory + "with" + new_memory)
-
-
-func _delete_memory(_index) -> void:
-	var old_memory = memory_bank[_index]
-	memory_bank.remove_at(_index)
-	print("erased " + old_memory)

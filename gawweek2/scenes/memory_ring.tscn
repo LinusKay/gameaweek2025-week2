@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctfvwblon2ail"]
+
+[ext_resource type="Script" path="res://scripts/memory_ring.gd" id="1_xwwhy"]
+[ext_resource type="Script" path="res://scenes/auto_spotlight.gd" id="2_nu3mn"]
+
+[node name="MemoryRing" type="Node3D"]
+script = ExtResource("1_xwwhy")
+
+[node name="MemoryTorus" type="CSGTorus3D" parent="."]
+visible = false
+inner_radius = 0.746
+
+[node name="MemoryBoxParent" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.80636, 0, 0, 0, 0.132205, 0, 0, 0, 0.312022, -1.21739, 0, 0)
+visible = false
+
+[node name="MemorySpotlight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.53004, 0)
+spot_range = 4.238
+spot_attenuation = 10.0
+spot_angle = 43.8817
+script = ExtResource("2_nu3mn")
+auto_light_speed = 1.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="MemorySpotlight"]
+transform = Transform3D(0.5, 3.78552e-08, -0.866025, -3.78552e-08, 1, 2.18557e-08, 0.866025, 2.18557e-08, 0.5, -3, 0, 0)
+script = ExtResource("2_nu3mn")
+auto_light_speed = 1.0

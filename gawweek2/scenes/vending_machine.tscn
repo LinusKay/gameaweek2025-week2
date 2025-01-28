@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dslrfkv74oywg"]
 
-[ext_resource type="PackedScene" uid="uid://bm1bfh2gx131x" path="res://Vending Machine.glb" id="1_fe67n"]
+[ext_resource type="PackedScene" uid="uid://bm1bfh2gx131x" path="res://models/Vending Machine.glb" id="1_fe67n"]
 
 [sub_resource type="Animation" id="Animation_elvaq"]
 resource_name = "interact"
