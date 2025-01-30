@@ -4,7 +4,7 @@
 
 ## Game: Memory Vendor
 
-!["Showcase image"](/showcase/Screenshot_2025-01-27_232610.png)
+!["Showcase image"](/showcase/memoryvendor.png)
 
 > ...
 
