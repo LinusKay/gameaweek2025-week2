@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://dslrfkv74oywg"]
+[gd_scene load_steps=8 format=4 uid="uid://dslrfkv74oywg"]
 
 [ext_resource type="PackedScene" uid="uid://bm1bfh2gx131x" path="res://models/Vending Machine.glb" id="1_fe67n"]
+[ext_resource type="FontFile" uid="uid://c5uvx2ftxyt1f" path="res://fonts/YujiSyuku/YujiSyuku-Regular.ttf" id="2_pif52"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_uy2gl"]
 _surfaces = [{
@@ -31,7 +32,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.0553095, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -83,7 +84,7 @@ _data = {
 [node name="Vending Machine" instance=ExtResource("1_fe67n")]
 
 [node name="Cube" parent="." index="0"]
-transform = Transform3D(2, 0, 0, 0, 1.99694, -0.110563, 0, 0.110563, 1.99694, 0, 1.6155, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.6155, 0)
 
 [node name="OutlineMesh" type="MeshInstance3D" parent="Cube" index="0"]
 unique_name_in_owner = true
@@ -107,3 +108,15 @@ libraries = {
 [node name="VendingAudio" type="AudioStreamPlayer3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 0.998471, -0.0552813, 0, 0.0552813, 0.998471, 0, 1.6155, 0)
 volume_db = -20.0
+bus = &"Reverb Bus"
+
+[node name="Label3D" type="Label3D" parent="." index="6"]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.866551, 2.90615, 0)
+text = "fsdfsdfsdfsdf"
+font = ExtResource("2_pif52")
+font_size = 50
+
+[node name="Label3D" type="Label3D" parent="Label3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03683, 0.570734, 5.96046e-08)
+text = "E"

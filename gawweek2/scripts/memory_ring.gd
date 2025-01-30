@@ -48,7 +48,6 @@ func _ready() -> void:
 	readied = true
 
 func _process(delta: float) -> void:
-	print(memory_selected)
 	if rotating:
 		var current_rotation = %MemoryBoxParent.rotation_degrees.y
 		var difference = rotation_goal - current_rotation
@@ -71,6 +70,7 @@ func _process(delta: float) -> void:
 
 func _memory_box_setup() -> void:
 	memory_selected = 0
+	_handle_memory_select()
 	# Reset rotation to zero
 	rotation_goal = 0.0
 	%MemoryBoxParent.rotation_degrees.y = 0.0
@@ -109,13 +109,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_rotate_ring(+1)
 			
 	if Input.is_action_just_pressed("test_1"):
-		print(memories.keys()[randi() % memories.keys().size()])
-		_add_memory(memories.keys()[randi() % memories.keys().size()])
-		print(memory_bank)
+		add_memory(memories.keys()[randi() % memories.keys().size()])
 
 
 func _handle_memory_select() -> void:
-	print(memory_selected)
 	for child in %MemoryBoxParent.get_children():
 		if(child.get_index() == memory_selected):
 			child.selected = true
@@ -142,16 +139,16 @@ func _selection_bound(_selection, _limit_low, _limit_up) -> int:
 
 
 # Memory management
-func _add_memory(_memory_id) -> void:
+func add_memory(_memory_id, _reload = true) -> void:
 	memory_bank.append(_memory_id)
-	_memory_box_setup()
+	if _reload:
+		_memory_box_setup()
 
 func _replace_memory(_index, _memory_id) -> void:
 	memory_bank[_index] = _memory_id
 	_memory_box_setup()
 
 func delete_memory(_index) -> void:
-	print(_index)
 	memory_bank.remove_at(_index)
 	_memory_box_setup()
 
@@ -173,18 +170,27 @@ func _on_memory_request() -> void:
 			emit_signal("forget")
 			delete_memory(memory_selected)
 		if %CloseTimer.is_stopped():
-			ui.hide()
-			hide()
-			player.can_move = true
+			hide_ring()
 	else: 
 		if(memory_bank.size() > 0): 
 			_play_sfx(_sfx_chime1)
 		else: 
 			_play_sfx(_sfx_chime3)
 			%CloseTimer.start()
-		ui.show()
-		show()
-		player.can_move = false
+		show_ring()
+
+
+func show_ring() -> void:
+	show()
+	ui.show()
+	player.can_move = false
+	
+
+func hide_ring() -> void:
+	hide()
+	ui.hide()
+	player.can_move = true
+	
 	
 func _play_sfx(_sfx) -> void:
 	var audio_node = audio_autokill_scene.instantiate()

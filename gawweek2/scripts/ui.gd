@@ -3,6 +3,7 @@ class_name UI
 
 @export var memory_ring: Node3D
 @export var player: CharacterBody3D
+@export var juicedupui: Control
 
 @onready var memory_count_label = %MemoryCountLabel
 @onready var memory_container = %MemoryContainer
@@ -18,9 +19,13 @@ var memory_count = 0:
 func _process(delta: float) -> void:
 	pass
 	
+func juiceup() -> void:
+	juicedupui.juiceup()
+	
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_on_selection_change()
 	_update_memory_count_label()
 	
 
@@ -28,7 +33,4 @@ func _update_memory_count_label():
 	memory_count_label.text = str(memory_count)
 
 func _on_selection_change():
-	print("UI: selection change")
 	%DescriptionLabel.text = memory_ring.get_memory_name()
-
-		

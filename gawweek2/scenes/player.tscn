@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://blscjckkvc8xo"]
+[gd_scene load_steps=6 format=3 uid="uid://blscjckkvc8xo"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_s10rd"]
 [ext_resource type="Texture2D" uid="uid://bhm2b4nk22sog" path="res://sprites/coga.png" id="2_03b15"]
+[ext_resource type="AudioStream" uid="uid://0dwnkuokjkpr" path="res://audio/01-footstep.ogg" id="3_3gy65"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rs1m5"]
 
@@ -37,8 +38,16 @@ one_shot = true
 unique_name_in_owner = true
 one_shot = true
 
+[node name="FootstepAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.679794, 0)
+stream = ExtResource("3_3gy65")
+volume_db = -15.0
+bus = &"Reverb Bus"
+
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
+bus = &"Reverb Bus"
 
 [connection signal="timeout" from="Head/CogaBottle/CogaTimer" to="." method="_on_coga_timer_timeout"]
 [connection signal="timeout" from="Head/CogaBottle/CogaDrinkTimer" to="." method="_on_coga_drink_timer_timeout"]

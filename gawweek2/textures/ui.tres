@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://bqcufoip767ib"]
 
-[ext_resource type="FontFile" uid="uid://c5uvx2ftxyt1f" path="res://fonts/YujiSyuku/YujiSyuku-Regular.ttf" id="1_p5o50"]
+[ext_resource type="FontFile" uid="uid://c5uvx2ftxyt1f" path="res://fonts/YujiSyuku/YujiSyuku-Regular.ttf" id="1_54tw1"]
 
 [resource]
-default_font = ExtResource("1_p5o50")
+default_font = ExtResource("1_54tw1")
 default_font_size = 25

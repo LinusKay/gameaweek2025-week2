@@ -21,6 +21,7 @@ var fov_lock = false
 var holding = false
 
 @onready var _sfx_drink = preload("res://audio/sip.ogg")
+@onready var _sfx_honk = preload("res://audio/juicedup.ogg")
 
 # Camera variables
 const CAMERA_LIMIT_DOWN = -60
@@ -30,11 +31,10 @@ const CAMERA_LIMIT_UP = 80
 @export var memory_ring: Node3D
 @export var ui: UI
 @export var vending_machine: Node3D
+@export var vending_ui: Control
 
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
-
-
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -70,9 +70,15 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("interact"):
 		if !holding:
-			if(position.distance_to(vending_machine.position) < vending_machine.vend_distance):
-				emit_signal("interact")
-				
+			emit_signal("interact")
+	
+	if Input.is_action_just_pressed("menu_memory"):
+		if !memory_ring.is_visible_in_tree():
+			memory_ring.show_ring()
+		else:
+			if !vending_machine.vending:
+				memory_ring.hide_ring()
+	
 		
 	if Input.is_action_just_pressed("toggle_mouse_capture"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -81,7 +87,8 @@ func _physics_process(delta: float) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			
 	if Input.is_action_just_pressed("click"):
-		_drink()
+		if holding:
+			_drink()
 		
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
@@ -101,6 +108,13 @@ func _physics_process(delta: float) -> void:
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	camera.transform.origin = _headbob(t_bob)
 	
+	# Footsteps
+	if(camera.transform.origin.y < -0.071) and velocity != Vector3(0,0,0) and is_on_floor():
+		if !%FootstepAudio.playing:
+			%FootstepAudio.pitch_scale = randf_range(0.95, 1.05)
+			%FootstepAudio.volume_db = randi_range(-20, -15)
+			%FootstepAudio.play()
+			
 	# FOV
 	if(!fov_lock):
 		var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
@@ -115,13 +129,20 @@ func _headbob(time) -> Vector3:
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
+
+
+func _on_vend_memory() -> void:
+	pass
+
 	
-func _on_vend() -> void:
+func _on_vend_item() -> void:
 	%CogaTimer.start()
+
 
 func _on_coga_timer_timeout() -> void:
 	%CogaBottle.show()
 	holding = true
+
 
 func _drink() -> void:
 	%CogaDrinkTimer.start()
@@ -131,6 +152,10 @@ func _drink() -> void:
 
 func _on_coga_drink_timer_timeout() -> void:
 	_bottle_dispose()
+	ui.juiceup()
+	%PlayerAudio.stream = _sfx_honk
+	%PlayerAudio.play()
+
 
 func _bottle_dispose() -> void:
 	%CogaBottle.hide()
