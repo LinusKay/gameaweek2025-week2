@@ -44,13 +44,15 @@ I think its such a fun way, tactile(?) to display what items you have on hand. M
 
 Soft-promise that next week I probably maybe won't use the dither filter again. Ok, moving on.
 
-The most painful part was creating the mamory ring. Again, first time working with some 3d concepts so I was bashing my head against tram windows trying to make the darn thing rotate how it rotated in my head. I do not understand 3d mathematics. I am not meant to know what a radian is. I was built to bang rocks together. 
+Enjoyed playing with lighting this week. What is this void you're in? I have no idea. Or I won't tell. I was originally wanting to create a "fog of war" effect around the player, but found the fog to be a little unwieldy. Lights were much easier to work with, and created a better looking effect. Where is this light coming from? Why isn't there more?
 
-It would rotate too much, too little, not at all, all at once. Seeing it come together in my kitchen as my housemate prepped dinner was almost as good as the green curry that came after. belleesimoh.
+The most painful part was creating the mamory ring. Again, first time working with some 3d concepts so I was bashing my head against tram windows trying to make the darn thing rotate how it rotated in my head. I do not understand 3d mathematics. I am not meant to know what a radian is. I was built to bang rocks together. It would rotate too much, too little, not at all, all at once. Seeing it come together in my kitchen as my housemate prepped dinner was almost as good as the green curry that came after. 
 
 It was also such a joy when I thought it might be tricky to get 3d text working, mostly based off a comment i saw on a godot threat saying they with Label3D was included in base, and then realising Label3D *is* included in base now. Love seeing the vending items show above its head.
 
-This project is still a bit of a mess, and I'm sure I could be using scenes better. 
+Writing the memories was the last part I finished up. I struggled to convey the right "feeling" or "mood" with them, and wasn't sure whether I wanted to just display a vague name, or a longer description. In the end I opted for both, but keeping the names vague. My UI skills still aren't amazing so it was a bit to fit on screen.
+
+This project is still a bit of a mess, and I'm sure I could be using scenes better, but I'm decently happy with how this came together. 
 
 ## Resources
 * [Godot Dither Shader by Sam Bigos](https://github.com/samuelbigos/godot_dither_shader/)
