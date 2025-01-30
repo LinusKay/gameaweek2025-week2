@@ -14,20 +14,43 @@
 |-------|----|
 |w a s d|move
 |shift|run
+|m|view memories
+|arrows|select vending item
 |e f enter| interact
+|click|drink
 
 
 ## Discussion
 
-Theme #1 for 2025 Game-A-Week was "memory". 
+Theme #2 for 2025 Game-A-Week was "memory". 
 
 
 ### Concept
 
+Week 2 was another that I already had a concept brewing in the back of my head for. I liked the idea of a skill-memory system, where in order to learn a new skill, you have to let go of one of the character's memories. This loss of memory would be somewhat of an eerie, emotional driver for the character, but also impact the world around them, with objects and inventory items losing their names or descriptions, reaching so far as to delete UI elements.
+
+In order to keep scope small, I avoided actually creating any "skill" gameplay, and focused on a proof-of-concept of memory trading. I had a vending machine model laying around so it came together quickly enough.
+
+The 3d memory inventory system, AKA the "memory ring" was inspired by some 90s/2000s games which really played with presenting items in an abstract physical way. Also largely inspired by the inventory in the game [Tower of Tears](https://store.steampowered.com/app/2559740/The_Tower_Of_Tears/) by [xena-spectrale](https://linktr.ee/xena_spectrale), which I love seeing in-dev videos from. 
+
+!["Tower of Tears"](/showcase/Screenshot_2025-01-30_183909.png)
+
+I think its such a fun way, tactile(?) to display what items you have on hand. Much more delicious than a list of text, which was the initial working solution. 
+
+!["Showcase image"](/showcase/Screenshot_2025-01-27_232610.png)
 
 
 ### Development
 
+Soft-promise that next week I probably maybe won't use the dither filter again. Ok, moving on.
+
+The most painful part was creating the mamory ring. Again, first time working with some 3d concepts so I was bashing my head against tram windows trying to make the darn thing rotate how it rotated in my head. I do not understand 3d mathematics. I am not meant to know what a radian is. I was built to bang rocks together. 
+
+It would rotate too much, too little, not at all, all at once. Seeing it come together in my kitchen as my housemate prepped dinner was almost as good as the green curry that came after. belleesimoh.
+
+It was also such a joy when I thought it might be tricky to get 3d text working, mostly based off a comment i saw on a godot threat saying they with Label3D was included in base, and then realising Label3D *is* included in base now. Love seeing the vending items show above its head.
+
+This project is still a bit of a mess, and I'm sure I could be using scenes better. 
 
 ## Resources
 * [Godot Dither Shader by Sam Bigos](https://github.com/samuelbigos/godot_dither_shader/)
@@ -35,3 +58,4 @@ Theme #1 for 2025 Game-A-Week was "memory".
 * [Fridge Loop 1 | OpenGameArt.org](https://opengameart.org/content/fridge-loop-1) 
 * [Vending Machine Sound Effects #SOUNDFX by AFRO NINJA](https://www.youtube.com/watch?v=7FEGMpMF5iU)
 * [Gastar Graffiti by Fitrah Type](https://www.dafont.com/gastar-graffiti.font)
+* that honk sound from pizza tower
