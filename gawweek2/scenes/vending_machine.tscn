@@ -116,7 +116,3 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.8665
 text = "fsdfsdfsdfsdf"
 font = ExtResource("2_pif52")
 font_size = 50
-
-[node name="Label3D" type="Label3D" parent="Label3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03683, 0.570734, 5.96046e-08)
-text = "E"

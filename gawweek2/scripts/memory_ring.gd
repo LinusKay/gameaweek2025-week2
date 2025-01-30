@@ -13,17 +13,21 @@ signal forget
 
 # memory management
 @onready var memories = {
-	"memory_1": {name = "memory 1", description = "memory 1: placeholder description", shape = CSGBox3D},
-	"memory_2": {name = "memory 2", description = "memory 2: placeholder description", shape = CSGSphere3D},
-	"memory_3": {name = "memory 3", description = "memory 3: placeholder description", shape = CSGTorus3D},
-	"memory_4": {name = "memory 4", description = "memory 4: placeholder description", shape = CSGCylinder3D},
-	"memory_5": {name = "memory 5", description = "memory 5: placeholder description", shape = CSGBox3D},
+	"memory_1": {name = "memory 1", description = "you swam in the creek.\nlight filtered through the canopy like soft rain.", shape = CSGBox3D},
+	"memory_2": {name = "memory 2", description = "your mother's eyes were green.", shape = CSGSphere3D},
+	"memory_3": {name = "memory 3", description = "blood dripped from your face onto cold tile.\nyour nose never sat right again.", shape = CSGTorus3D},
+	"memory_4": {name = "memory 4", description = "sorrow.\nthat inky black welling in the pit of your stomach.", shape = CSGCylinder3D},
+	"memory_5": {name = "memory 5", description = "soft sheets. comfort. sleep.", shape = CSGBox3D},
+	"memory_6": {name = "memory 6", description = "their fingers felt so fragile, woven with your own", shape = CSGBox3D},
+	"memory_7": {name = "memory 7", description = "music drifted gently through the streets, \nmorning fresh with birdsong", shape = CSGCylinder3D},
+	"memory_8": {name = "memory 8", description = "you cheered in awe at the lions in their glass enclosures\nthey met you with a low roar", shape = CSGTorus3D},
+	"memory_9": {name = "memory 9", description = "the sky painted a milky wash of stars,\nfor two silent visitors, hand-in-hand on the grass.", shape = CSGSphere3D},
 }
 
 @onready var memory_bank = [
-	"memory_1",
-	"memory_2",
-	"memory_4",
+	#"memory_1",
+	#"memory_2",
+	#"memory_4",
 ]
 
 @onready var memory_limit = 4
@@ -44,6 +48,7 @@ var rotating = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_memory_setup()
 	_memory_box_setup()
 	readied = true
 
@@ -67,6 +72,12 @@ func _process(delta: float) -> void:
 			%MemoryBoxParent.rotation_degrees.y += direction * step
 		
 
+func _memory_setup() -> void:
+	var memories_temp = memories.duplicate()
+	for n in randi_range(3,5):
+		var memory_key = memories_temp.keys()[randi() % memories_temp.size()]
+		memory_bank.append(memory_key)
+		memories_temp.erase(memory_key)
 
 func _memory_box_setup() -> void:
 	memory_selected = 0
@@ -161,7 +172,10 @@ func get_memory_name() -> String:
 		return "no memory"
 
 func get_memory_description() -> String:
-	return memories[memory_bank[memory_selected]].description
+	if(memory_bank.size() > 0):
+		return memories[memory_bank[memory_selected]].description
+	else: 
+		return ""
 	
 
 func _on_memory_request() -> void:
@@ -171,6 +185,7 @@ func _on_memory_request() -> void:
 			delete_memory(memory_selected)
 		if %CloseTimer.is_stopped():
 			hide_ring()
+			ui.hide_instruction()
 	else: 
 		if(memory_bank.size() > 0): 
 			_play_sfx(_sfx_chime1)
@@ -178,6 +193,7 @@ func _on_memory_request() -> void:
 			_play_sfx(_sfx_chime3)
 			%CloseTimer.start()
 		show_ring()
+		ui.show_instruction()
 
 
 func show_ring() -> void:

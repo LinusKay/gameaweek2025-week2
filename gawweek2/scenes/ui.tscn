@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq8cdfapse4fq"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_sa2nj"]
-[ext_resource type="Theme" uid="uid://bqcufoip767ib" path="res://textures/ui.tres" id="2_0568b"]
+[ext_resource type="Theme" path="res://textures/ui.tres" id="2_0568b"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -63,22 +63,36 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer3"]
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_0568b")
-text = "DESCRIPTION"
+text = "NAME"
+horizontal_alignment = 1
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer5"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 75
+
+[node name="MessageLabel" type="Label" parent="MarginContainer/VBoxContainer5/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_0568b")
+theme_override_font_sizes/font_size = 25
+text = "description"
 horizontal_alignment = 1
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer4"]
-layout_mode = 2
-theme_override_constants/margin_bottom = 175
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer4/MarginContainer"]
+[node name="InstructionLabel" type="Label" parent="MarginContainer/VBoxContainer4"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme = ExtResource("2_0568b")
 theme_override_font_sizes/font_size = 35

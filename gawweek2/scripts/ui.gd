@@ -16,21 +16,31 @@ var memory_count = 0:
 		memory_count = new_memory_count
 		_update_memory_count_label()
 
-func _process(delta: float) -> void:
-	pass
-	
-func juiceup() -> void:
-	juicedupui.juiceup()
-	
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_on_selection_change()
 	_update_memory_count_label()
 	
 
+func _process(delta: float) -> void:
+	pass
+
+
+func juiceup() -> void:
+	juicedupui.juiceup()
+
+
 func _update_memory_count_label():
 	memory_count_label.text = str(memory_count)
 
+
 func _on_selection_change():
-	%DescriptionLabel.text = memory_ring.get_memory_name()
+	%NameLabel.text = memory_ring.get_memory_name()
+	%MessageLabel.text = memory_ring.get_memory_description()
+
+func show_instruction():
+	%InstructionLabel.show()
+	
+func hide_instruction():
+	%InstructionLabel.hide()
